@@ -7,11 +7,19 @@ use App\Http\Controllers\MyHttpController;
 Route::post('/login', function (Request $request) {
     $loginCtr = new LoginController();
     $result = $loginCtr->login($request);
-    return MyHttpController::createResponse(
-        $result, 
-        $result ? true : 401, 
-        $result ? [] : ['Wrong email or password. Try again.']
-    );
+    $resultCode = $result === 1 ? true : 401;
+    
+    $errors = Array();
+    if($result === 2) {
+        $errors[]='Wrong email or password. Try again.';
+    }
+    if($result === 3) {
+        $errors[]='Too many attempts. Try again later.';
+    }
+    // $result == 1 - ok
+    // $result == 2 - wrong data
+    // $result == 3 - too many attempts
+    return MyHttpController::createResponse($result, $resultCode, $errors);
 });
 
 Route::get('/logout', function (Request $request) {
