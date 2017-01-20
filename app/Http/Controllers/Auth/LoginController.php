@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -13,10 +11,7 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest', ['except' => 'logout']);
-    }
+    public function __construct() {}
     /**
      * Handle a login request to the application.
      *
@@ -25,7 +20,6 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-//        return false;
         $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
@@ -57,7 +51,8 @@ class LoginController extends Controller
      */
     public function checkLogged()
     {
-        return Auth::user();
+        $user = Auth::user();
+        return $user!== null ? $user : false;
     }
     /**
      * Validate the user login request.
@@ -76,7 +71,7 @@ class LoginController extends Controller
      *
      * @return string
      */
-    public function username()
+    protected function username()
     {
         return 'email';
     }
@@ -128,7 +123,7 @@ class LoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    protected function sendFailedLoginResponse(Request $request)
+    protected function sendFailedLoginResponse()
     {
         return false;
     }
