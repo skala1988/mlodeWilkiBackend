@@ -3,7 +3,6 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -24,10 +23,8 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-
+        
         if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-
             return 3;
         }
         

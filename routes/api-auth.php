@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MyHttpController;
@@ -14,7 +13,8 @@ Route::post('/login', function (Request $request) {
         $errors[]='Wrong email or password. Try again.';
     }
     if($result === 3) {
-        $errors[]='Too many attempts. Try again later.';
+        // Controlled by ThrottleRequestOverride class
+        // $errors[]='Too many attempts. Try again later.';
     }
     // $result == 1 - ok
     // $result == 2 - wrong data
